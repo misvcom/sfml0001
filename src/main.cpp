@@ -188,7 +188,7 @@ int main()
     // sf::Style::Close 表示窗口只显示关闭按钮
     sf::RenderWindow window(
         sf::VideoMode({ WINDOW_WIDTH, WINDOW_HEIGHT }),
-        "SFML Breakout Demo - 按空格键发射",
+        "SFML Breakout Demo",
         sf::Style::Close
     );
     window.setFramerateLimit(60);  // 限制帧率为 60 FPS

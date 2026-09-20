@@ -4,14 +4,16 @@ project(CMakeSFMLProject LANGUAGES CXX)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-include(FetchContent)
-FetchContent_Declare(SFML
-    GIT_REPOSITORY https://github.com/SFML/SFML.git
-    GIT_TAG 3.1.0
-    GIT_SHALLOW ON
-    EXCLUDE_FROM_ALL
-    SYSTEM)
-FetchContent_MakeAvailable(SFML)
+# 使用本地 SFML 源码
+set(SFML_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/SFML-3.1.0")
+if(NOT EXISTS "${SFML_SOURCE_DIR}/CMakeLists.txt")
+    message(FATAL_ERROR "找不到 SFML 源码目录。请下载 SFML-3.1.0-sources.zip 并解压到 ${SFML_SOURCE_DIR}")
+endif()
+add_subdirectory(${SFML_SOURCE_DIR})
+
+if(TARGET mbedtls)
+    target_compile_options(mbedtls PRIVATE -w)
+endif()
 
 add_executable(main src/main.cpp)
 target_compile_features(main PRIVATE cxx_std_17)
